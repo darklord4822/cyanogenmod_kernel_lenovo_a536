@@ -1,0 +1,65 @@
+/* SENSOR FULL SIZE */
+#ifndef __SENSOR_H
+#define __SENSOR_H
+
+
+typedef enum {
+    SENSOR_MODE_INIT = 0,
+    SENSOR_MODE_PREVIEW,
+    SENSOR_MODE_CAPTURE,
+    SENSOR_MODE_ZSD   //add by zhangxh
+} OV2686_SENSOR_MODE;
+
+typedef enum _OV2686_OP_TYPE_ {
+        OV2686_MODE_NONE,
+        OV2686_MODE_PREVIEW,
+        OV2686_MODE_CAPTURE,
+        OV2686_MODE_QCIF_VIDEO,
+        OV2686_MODE_CIF_VIDEO,
+        OV2686_MODE_QVGA_VIDEO
+    } OV2686_OP_TYPE;
+
+extern OV2686_OP_TYPE OV2686_g_iOV2686_Mode;
+
+
+#define OV2686_MAX_SHUTTER_PREVIEW   (0x335)   //add by zhangxh
+#define OV2686_MAX_SHUTTER_CAPTIRE   (0x556)   //add by zhangxh
+
+#define OV2686_MAX_GAIN							(0xffff)
+#define OV2686_MAX_SHUTTER					(0xffff)
+#define OV2686_MIN_GAIN							(0x0000)
+#define OV2686_MIN_SHUTTER					(1)
+
+#define OV2686_ID_REG                         (0x300A)
+#define OV2686_INFO_REG                       (0x300B)
+ 
+#define OV2686_IMAGE_SENSOR_SVGA_WIDTH        (800)
+#define OV2686_IMAGE_SENSOR_SVGA_HEIGHT       (600)
+#define OV2686_IMAGE_SENSOR_UVGA_WITDH        (1600) 
+#define OV2686_IMAGE_SENSOR_UVGA_HEIGHT       (1200)
+
+#define OV2686_PV_PERIOD_PIXEL_NUMS    		(1708)  		
+#define OV2686_PV_PERIOD_LINE_NUMS     		(644)   	
+#define OV2686_FULL_PERIOD_PIXEL_NUMS  		(1700)  	
+#define OV2686_FULL_PERIOD_LINE_NUMS   		(1294)  	
+
+#define OV2686_PV_EXPOSURE_LIMITATION      	(644-4)
+#define OV2686_FULL_EXPOSURE_LIMITATION    	(1294-4)
+
+#define OV2686_PV_GRAB_START_X 				  (5)
+#define OV2686_PV_GRAB_START_Y  			  (5)
+#define OV2686_FULL_GRAB_START_X   			(5)
+#define OV2686_FULL_GRAB_START_Y	  		(5)
+
+#define OV2686_WRITE_ID							  0x78  //0x20
+#define OV2686_READ_ID								0x79  //0x21
+
+UINT32 OV2686Open(void);
+UINT32 OV2686GetResolution(MSDK_SENSOR_RESOLUTION_INFO_STRUCT *pSensorResolution);
+UINT32 OV2686GetInfo(MSDK_SCENARIO_ID_ENUM ScenarioId, MSDK_SENSOR_INFO_STRUCT *pSensorInfo, MSDK_SENSOR_CONFIG_STRUCT *pSensorConfigData);
+UINT32 OV2686Control(MSDK_SCENARIO_ID_ENUM ScenarioId, MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *pImageWindow, MSDK_SENSOR_CONFIG_STRUCT *pSensorConfigData);
+UINT32 OV2686FeatureControl(MSDK_SENSOR_FEATURE_ENUM FeatureId, UINT8 *pFeaturePara,UINT32 *pFeatureParaLen);
+UINT32 OV2686Close(void);
+UINT32 OV2686_YUV_SensorInit(PSENSOR_FUNCTION_STRUCT *pfFunc);
+
+#endif
