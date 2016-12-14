@@ -102,8 +102,13 @@ u32 pinSetIdx = 0;//default main sensor
 						GPIO_OUT_ZERO,					/* OFF state */
 						GPIO_CAMERA_CMPDN1_PIN,
 						GPIO_CAMERA_CMPDN1_PIN_M_GPIO,
+						#if defined(OV2686_YUV)
 						GPIO_OUT_ONE,					/* ONF state */
 						GPIO_OUT_ZERO,					/* OFF state */
+						#else
+						GPIO_OUT_ZERO,					/* OFF state */
+						GPIO_OUT_ONE,					/* ONF state */
+						#endif
 						},				
 
                    };
@@ -200,9 +205,14 @@ u32 pinSetIdx = 0;//default main sensor
         	    	}  
 
 			mdelay(20);
-	}		
+	}	
+	#if defined(OV2686_YUV)	
 	else if (currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV2686_YUV, currSensorName)))
 	{
+	#else
+	else if (currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV2659_YUV, currSensorName)))
+	{
+	#endif
 
 		//disable inactive sensor
 		if (GPIO_CAMERA_INVALID != pinSet[1-pinSetIdx][IDX_PS_CMRST]) {
@@ -344,8 +354,13 @@ u32 pinSetIdx = 0;//default main sensor
     		}
 		}
 
-		else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV2686_YUV,currSensorName)))
-        {
+	#if defined(OV2686_YUV)	
+	else if (currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV2686_YUV, currSensorName)))
+	{
+	#else
+	else if (currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV2659_YUV, currSensorName)))
+	{
+	#endif
             //ISP_MCLK1_EN(false);
         
             //PK_DBG("[OFF]sensorIdx:%d \n",SensorIdx);

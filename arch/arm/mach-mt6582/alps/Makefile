@@ -8,6 +8,10 @@ ifeq ($(CONFIG_MTK_MC3XXX),y)
 obj-y   +=  accelerometer/mc3xxx/
 endif
 
+ifeq ($(CONFIG_MTK_KXTJ2_1009),y)
+obj-y   +=  accelerometer/KXTJ2_1009/
+endif
+
 endif
 
 ifneq ($(CONFIG_ARCH_MTK_PROJECT),)
@@ -20,7 +24,7 @@ obj-y   +=  lcm/
 #obj-y	+=  hdmi/
 obj-y	+=  camera/camera/
 obj-y	+=  imgsensor/ov5648_mipi_raw/
-#obj-y	+=  imgsensor/ov2659_yuv/
+obj-y	+=  imgsensor/ov2659_yuv/
 obj-y	+=  imgsensor/ov2686_yuv/
 obj-y   +=  flashlight/constant_flashlight/
 obj-y	+=  vibrator/
